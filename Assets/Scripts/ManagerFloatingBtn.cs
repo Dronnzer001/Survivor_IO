@@ -65,6 +65,7 @@ public class ManagerFloatingBtn : MonoBehaviour
     }
     void Start()
     {
+       
         BtnCenter.onClick.Invoke();
         Evolvebtn.onClick.Invoke();
         shopbtn.onClick.Invoke();
@@ -73,7 +74,9 @@ public class ManagerFloatingBtn : MonoBehaviour
         BtnCenter.onClick.Invoke();
         shopbtn.onClick.Invoke();
         LogCenter.GetComponent<Animator>().Play("VectorBattleBack");
-        CheckFirsts();
+      
+        CheckCenter();
+      
     }
     void Update()
     {
@@ -124,7 +127,7 @@ public class ManagerFloatingBtn : MonoBehaviour
 
     void CheckActive()
     {
-
+       
     }
     void CheckFirsts()
     {
@@ -314,6 +317,7 @@ public class ManagerFloatingBtn : MonoBehaviour
             FirstMinseBtn.GetComponent<Image>().sprite = Inactive;
             FirstBtn.GetComponent<Image>().sprite = Inactive;
             ThirdBtn.GetComponent<Image>().sprite = Inactive;
+        
         }
     }
     public void CheckThird()

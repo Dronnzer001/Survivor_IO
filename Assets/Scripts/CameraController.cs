@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+
 
 public class CameraController : MonoBehaviour
 {
@@ -12,16 +12,44 @@ public class CameraController : MonoBehaviour
     private Vector3 rb;
     internal bool Manage = true;
 
+    [Header("Camera Bounds")]
+    public bool useBounds = true;
+    public Vector2 minBounds; // Bottom-left corner
+    public Vector2 maxBounds; // Top-right corner
+    private Boundries boundries;
+    private void Start()
+    {
+      
+    }
+
+    private void SetBounds()
+    {
+      
+    }
+
     void LateUpdate()
     {
-        transform.position = Vector3.SmoothDamp(transform.position, Player.transform.position + Offest, ref rb, SpeedMove);
+     
+        Vector3 targetPos = Player.transform.position + Offest;
+        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref rb, SpeedMove);
+
+        if (useBounds)
+        {
+            // Clamp X and Y positions, keep Z as is
+            float clampedX = Mathf.Clamp(transform.position.x, minBounds.x, maxBounds.x);
+            float clampedY = Mathf.Clamp(transform.position.y, minBounds.y, maxBounds.y);
+            transform.position = new Vector3(clampedX, clampedY, transform.position.z);
+        }
+        SetBounds();
     }
+
     void Update()
     {
-        if(Spinner.activeSelf == true && Manage == true)
+        if (Spinner.activeSelf && Manage)
         {
-            this.gameObject.GetComponent<Camera>().fieldOfView += 0.5f;
-            if(this.gameObject.GetComponent<Camera>().fieldOfView == 85)
+            Camera cam = GetComponent<Camera>();
+            cam.fieldOfView += 0.5f;
+            if (cam.fieldOfView >= 85)
             {
                 Manage = false;
             }

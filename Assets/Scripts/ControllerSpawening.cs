@@ -24,13 +24,13 @@ public class ControllerSpawening : MonoBehaviour
         }
         if (Manager.MapReady == true)
         {
-            Spawner.SetActive(true);
+           Spawner.SetActive(true);
             if(CheckWork == true)
             {
                 StartCoroutine(SpawenOne.GetComponent<SpawenManager>().SpaweningManager());
                 StartCoroutine(SpawenTwo.GetComponent<SpawenManager>().SpaweningManager());
                 StartCoroutine(SpawenOne.GetComponent<SpawenManager>().stopSpawning());
-                StartCoroutine(SpawenTwo.GetComponent<SpawenManager>().stopSpawning());
+               StartCoroutine(SpawenTwo.GetComponent<SpawenManager>().stopSpawning());
                 CheckWork = false;
             }
         }

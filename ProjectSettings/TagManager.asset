@@ -18,6 +18,7 @@ TagManager:
   - Diamond
   - UI
   - Coins
+  - VirtualCam
   layers:
   - Default
   - TransparentFX

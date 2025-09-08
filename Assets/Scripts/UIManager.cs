@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -59,6 +60,12 @@ public class UIManager : MonoBehaviour
     internal bool DestroyEnemys = false;
     internal bool StopAllAudios = false;
     internal bool MapReady = false;
+    public int currentCoins = 0;
+    [Header("Longest Timer")]
+    public Text TimerText;
+
+    public Text FinishScreenCoins;
+    public Text FinishScreenExp;
     void Start()
     {
         Checking = PlayerPrefs.GetString("CheckEvolve");
@@ -76,10 +83,14 @@ public class UIManager : MonoBehaviour
             StopAllAudios = true;
             FinishScreen.SetActive(true);
             Advertisements.Instance.ShowInterstitial();
+            timer.timerIsRunning = false;
             Manager.PlayerDeath = false;
             Manager.Health = 100;
             Manager.HealthBar.color = Color.green;
+            FinishScreenCoins.text = currentCoins.ToString();
+            FinishScreenExp.text = ((int)(PlayerPrefs.GetFloat("Score")* 100f)).ToString();
             FinishScreenB = true;
+            AudioListener.pause = true;
         }
         else
         {
@@ -89,6 +100,7 @@ public class UIManager : MonoBehaviour
     }
     public void BackBtn()
     {
+        Resume();
         MapReady = false;
         EffectFadeGamePlay.SetActive(true);
         DestroyEnemys = true;
@@ -106,6 +118,9 @@ public class UIManager : MonoBehaviour
         Destroy(CurrentLevel);
         StartCoroutine(StartBacking());
         Advertisements.Instance.ShowInterstitial();
+        TimerText.text = "Longest Survived: " + timer.BestTime.text;
+        AudioListener.pause = false;
+        currentCoins = 0;
     }
     IEnumerator StartBacking()
     {
@@ -116,6 +131,8 @@ public class UIManager : MonoBehaviour
         Manager.CurrentCurrency = 0;
         Manager.CurrentKilled = 0;
         timer.timeRemaining = 0;
+      
+        GameManager.stopTimeRecord = false;
         FinishScreenB = false;
         EffectFadeGamePlay.SetActive(false);
         if (Manager.Boolean.GameStart == true)
@@ -127,12 +144,20 @@ public class UIManager : MonoBehaviour
             ScreenMainMenu.SetActive(true);
             Manager.Boolean.GameStart = false;
         }
+        Resume();
     }
     public void PlayBtn()
     {
+        if (PlayerPrefs.GetInt("flash") <= 5)
+        {
+            Debug.Log("No Flash");
+            return;
+        }
         EffectFade.SetActive(true);
-        (Instantiate(Level.Level1, Level.Level1.transform.position, Level.Level1.transform.rotation) as GameObject).transform.SetParent(LevelLocalisation.transform);
+        (Instantiate(Level.Level1, Level.Level1.transform.position, Level.Level1.transform.rotation) as GameObject).
+            transform.SetParent(LevelLocalisation.transform);
         CurrentName = Level.Level1.gameObject.name + "(Clone)";
+        GameManager.survivalTime = 0;
         StartCoroutine(GameStart());
     }
     IEnumerator GameStart()

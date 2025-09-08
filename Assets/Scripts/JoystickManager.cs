@@ -31,18 +31,29 @@ public class JoystickManager : MonoBehaviour
 
     void Update()
     {
-        if (Boolean.GameStart == true)
+        if (Boolean.GameStart)
         {
             GameStarting = true;
-            if(rigidManager == true)
+            if (rigidManager)
             {
                 rb = GetComponent<Rigidbody2D>();
                 rigidManager = false;
             }
-        }
-        if(GameStarting == true)
-        {
-            if (rb.velocity.magnitude > 0)
+
+            Vector2 joystickInput = joystickMovement.joystickVec;
+            Vector2 keyboardInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+
+            Vector2 finalInput = Vector2.zero;
+
+            if (joystickInput != Vector2.zero)
+                finalInput = joystickInput;
+            else if (keyboardInput != Vector2.zero)
+                finalInput = keyboardInput;
+
+            rb.velocity = finalInput * playerSpeed;
+
+            // Play animation based on movement
+            if (finalInput.magnitude > 0)
             {
                 anim.Play("CharacterBody");
             }
@@ -50,54 +61,31 @@ public class JoystickManager : MonoBehaviour
             {
                 anim.Play("0");
             }
-            AnimatorController();
-            if (joystickMovement.joystickVec.y != 0)
-            {
-                rb.velocity = new Vector2(joystickMovement.joystickVec.x * playerSpeed, joystickMovement.joystickVec.y * playerSpeed);
 
-            }
-            else
-            {
-                rb.velocity = Vector2.zero;
-            }
+            AnimatorController(finalInput);
         }
-        if(Boolean.GameStart == false)
+        else
         {
             GameStarting = false;
             rigidManager = true;
+            rb.velocity = Vector2.zero;
         }
     }
 
-    void AnimatorController()
+    void AnimatorController(Vector2 direction)
     {
-            if (joystickMovement.joystickVec.y < 0)
-            {
-                //Debug.Log("Going Down");
-            }
+        if (direction.x < 0)
+        {
+            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+            if (Gun.activeSelf)
+                Gun.transform.localScale = new Vector3(-0.2446888f, 0.2446888f, 0.2446888f);
+        }
 
-            if (joystickMovement.joystickVec.y > 0)
-            {
-                //Debug.Log("Going Up");
-            }
-
-            if (joystickMovement.joystickVec.x < 0)
-            {
-                //Debug.Log(" Going Left");
-                this.gameObject.transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
-                if (Gun.activeSelf == true)
-                {
-                    Gun.transform.localScale = new Vector3(-0.2446888f, 0.2446888f, 0.2446888f);
-                }
-            }
-
-            if (joystickMovement.joystickVec.x > 0)
-            {
-                //Debug.Log("Going Right");
-                this.gameObject.transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-                if (Gun.activeSelf == true)
-                {
-                    Gun.transform.localScale = new Vector3(0.2446888f, 0.2446888f, 0.2446888f);
-                }
-            }
+        if (direction.x > 0)
+        {
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+            if (Gun.activeSelf)
+                Gun.transform.localScale = new Vector3(0.2446888f, 0.2446888f, 0.2446888f);
+        }
     }
 }

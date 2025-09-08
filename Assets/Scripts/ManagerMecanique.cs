@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
+using System;
 
 
 public class ManagerMecanique : MonoBehaviour
@@ -44,6 +45,11 @@ public class ManagerMecanique : MonoBehaviour
         FlashTime.text = "";
         GemsTime.text = "";
         CoinsTime.text = "";
+        if(FlashInt <= 00)
+        {
+            FlashInt = 100;
+            PlayerPrefs.SetInt("flash", FlashInt);
+        }
     }
     void Update()
     {
@@ -70,7 +76,29 @@ public class ManagerMecanique : MonoBehaviour
     }
     public void SetStart()
     {
-        FlashInt += 3;
+        if(FlashInt <=0)
+        {
+            return;
+        }
+        FlashInt -= 5;
         PlayerPrefs.SetInt("flash", FlashInt);
+    }
+    public void DecrementHandler(ShopItemType val, int price)
+    {
+        switch (val)
+        {
+            case ShopItemType.flash:
+                FlashInt -= price;
+                PlayerPrefs.SetInt("flash", FlashInt);
+                break;
+            case ShopItemType.gems:
+               GemsInt -= price;
+                PlayerPrefs.SetInt("gems", GemsInt);
+                break;
+                case ShopItemType.coins:
+                CoinsInt -= price;
+                PlayerPrefs.SetInt("coins", CoinsInt);
+                break;
+        }
     }
 }

@@ -83,7 +83,8 @@ public class GameManager : MonoBehaviour
     internal bool SetActiveAll = true;
     internal bool PlayerDeath = false;
     internal bool Checkenemys = false;
-
+    public static float survivalTime = 0f;
+    public static bool stopTimeRecord = false;
     void Start()
     {
         len = myColors.Length;
@@ -91,11 +92,14 @@ public class GameManager : MonoBehaviour
         ManagerDownBtn.Shop = true;
         ManagerDownBtn.Equipement = true;
         ManagerDownBtn.Death = true;
+        
 
     }
     void Update()
     {
-        if(Checkenemys == true)
+       
+           
+        if (Checkenemys == true)
         {
 
         }
@@ -105,12 +109,17 @@ public class GameManager : MonoBehaviour
             ContainerWorld.SetActive(true);
             UIWeapon.SetActive(true);
             SetActiveAll = false;
-        }if(Boolean.GameStart == false)
+            stopTimeRecord = true;
+            Spawner.enabled = true;
+        }
+        if(Boolean.GameStart == false)
         {
             Valeur = 0;
             ValureLevel = 0;
             ReloadWeapon.fillAmount = 0;
             ScoringLevel.fillAmount = 0;
+        
+            stopTimeRecord = false;
         }
         if(Boolean.GameStart == true)
         {
@@ -162,8 +171,8 @@ public class GameManager : MonoBehaviour
             {
                 foreach (GameObject joint in Enemys)
                 {
-                    joint.GetComponent<EnemyManager>().enabled = false;
-                    joint.GetComponent<Rigidbody2D>().simulated = false;
+                   // joint.GetComponent<EnemyManager>().enabled = false;
+                   // joint.GetComponent<Rigidbody2D>().simulated = false;
                 }
             }
             if (StartFlashing == true)
@@ -176,6 +185,10 @@ public class GameManager : MonoBehaviour
                     colorIndex++;
                     colorIndex = (colorIndex >= len) ? 0 : colorIndex;
                 }
+            }
+            if (stopTimeRecord == true)
+            {
+                survivalTime += Time.deltaTime;
             }
             CheckKilledAndCoins();
         }
@@ -190,14 +203,19 @@ public class GameManager : MonoBehaviour
         {
             Spawner.enabled = false;
             startmove = true;
-
+           
         }
+        if(PlayerDeath == false)
+        {
+            Time.timeScale = 0f;
+        }
+      
     }
     public void ResumeBtn()
     {
         AvailabelWeapon = true;
         Checkenemys = true;
-        Times.timerIsRunning = true;
+       // Times.timerIsRunning = true;
         PlayerPerfb.GetComponent<PlayerManager>().enabled = true;
         PlayerPerfb.GetComponent<Rigidbody2D>().simulated = true;
         if (EnemyAvailable == true)
@@ -210,6 +228,7 @@ public class GameManager : MonoBehaviour
                 joint.GetComponent<Rigidbody2D>().simulated = true;
             }
         }
+        Time.timeScale = 1f;
     }
     void CheckKilledAndCoins()
     {

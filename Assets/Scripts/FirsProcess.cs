@@ -30,41 +30,60 @@ public class FirsProcess : MonoBehaviour
     internal bool LevOneFinish = false;
     internal bool LevTwoFinish = false;
     internal bool LevThreeFinish = false;
+    public float waitTimeLevelOne = 20;
+    public float waitTimeLevelTwo =40f;
+    public float waitTimeLevelThree = 60f;
     void Start()
     {
         NotDone1.SetActive(false);
     }
+   
     void Update()
     {
-        if(LevOneDone == true)
+        if (PlayerPrefs.GetInt("flash") <= 5)
         {
-            Done1.SetActive(true);
-            NotDone1.SetActive(false);
-            Btn1.interactable = true;
+            Debug.Log("No Flash");
+            return;
+        }
+        if (LevOneDone == true)
+        {
+         
+                Done1.SetActive(true);
+                NotDone1.SetActive(false);
+                Btn1.interactable = true;
+         
+        
         }
         if(LevTwoDone == false && LevOneDone == true)
         {
             NotDone2.SetActive(false);
             Btn2.interactable = true;
-            Btn1.interactable = false;
+            Btn1.interactable = true;
         }
         if (LevTwoDone == true)
         {
-            Done2.SetActive(true);
-            NotDone2.SetActive(false);
-            Btn2.interactable = true;
+         
+                Done2.SetActive(true);
+                NotDone2.SetActive(false);
+                Btn2.interactable = true;
+           
+
+        
         }
         if(LevThreeDone == false && LevTwoDone == true)
         {
             NotDone3.SetActive(false);
             Btn3.interactable = true;
-            Btn2.interactable = false;
+            Btn2.interactable = true;
         }
         if (LevThreeDone == true)
         {
-            Done3.SetActive(true);
-            NotDone3.SetActive(false);
-            Btn3.interactable = true;
+           
+                Done3.SetActive(true);
+                NotDone3.SetActive(false);
+                Btn3.interactable = true;
+           
+          
         }
     }
 }

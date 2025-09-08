@@ -14,14 +14,14 @@ public class TimerManager : MonoBehaviour
     private void Start()
     {
         // Starts the timer automatically
-        timerIsRunning = true;
+       // timerIsRunning = true;
     }
     void Update()
     {
+        if (timerIsRunning == true)
+        {
         timeTextScreenFinish.text = timeText.text;
         BestTime.text = timeText.text;
-        if (timerIsRunning)
-        {
             if (timeRemaining > -1)
             {
                 timeRemaining += Time.deltaTime;

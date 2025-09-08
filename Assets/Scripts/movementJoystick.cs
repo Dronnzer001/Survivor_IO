@@ -14,7 +14,8 @@ public class movementJoystick : MonoBehaviour
     public GameObject joystickBG;
 
     public float moveSpeed = 5f;
-    public Vector2 joystickVec;
+    [HideInInspector] public Vector2 joystickVec; // Accessible from PlayerManager
+
     private Vector2 joystickTouchPos;
     private Vector2 joystickOriginalPos;
     private float joystickRadius;
@@ -27,25 +28,7 @@ public class movementJoystick : MonoBehaviour
 
     void Update()
     {
-        // Combine joystick input and PC input
-        Vector2 moveDirection = joystickVec;
-
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        if (h != 0 || v != 0)
-        {
-            moveDirection = new Vector2(h, v).normalized;
-            joystickVec = moveDirection; // sync for rotation
-        }
-
-        // Move the player using transform
-        if (moveDirection != Vector2.zero)
-        {
-            transform.position += (Vector3)(moveDirection * moveSpeed * Time.deltaTime);
-        }
-
-        // Arrow rotation
+        // Arrow & Gun rotation based on joystickVec only
         if (joystickVec == Vector2.zero)
         {
             ArrowDirecteur.SetActive(false);
@@ -91,5 +74,4 @@ public class movementJoystick : MonoBehaviour
         joystick.transform.position = joystickOriginalPos;
         joystickBG.transform.position = joystickOriginalPos;
     }
-
 }

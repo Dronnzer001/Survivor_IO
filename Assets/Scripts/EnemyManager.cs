@@ -91,7 +91,7 @@ public class EnemyManager : MonoBehaviour
             Audio.Play();
             Bolt.SetActive(true);
             Bolt.GetComponent<TextMeshProUGUI>().color = Color.red;
-            Bolt.GetComponent<TextMeshProUGUI>().text = "" + ValueAdd;
+            Bolt.GetComponent<TextMeshProUGUI>().text = "" + 45;
             this.gameObject.GetComponent<Animator>().Play("ZombieDeath");
             (Instantiate(HitEffect, transform.position, transform.rotation) as GameObject).transform.SetParent(BloodLocalisation.transform);
             Manager.GetComponent<GameManager>().CurrentKilled += 1;

@@ -48,7 +48,7 @@ public class Diamond : MonoBehaviour
         {
             if (StartMove == false)
             {
-                transform.position = Vector2.MoveTowards(this.transform.position, Player.transform.position, 15f * Time.deltaTime);
+             transform.position = Vector2.MoveTowards(this.transform.position, Player.transform.position, 15f * Time.deltaTime);
             }
         }
     }

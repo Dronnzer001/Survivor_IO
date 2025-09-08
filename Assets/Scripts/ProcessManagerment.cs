@@ -21,29 +21,25 @@ public class ProcessManagerment : MonoBehaviour
 
     [Header("Managers Controller")]
     public LevelsManager Manager;
-
-    void Start()
-    {
-
-    }
-    void Update()
-    {
-        
-    }
     public void OneLevel1()
     {
         Manager.Level1 = Manager.Levels[0];
+        
+       
         Btn.onClick.Invoke();
+    
         StartCoroutine(CheckDoneOne());
     }
     IEnumerator CheckDoneOne()
     {
         yield return new WaitForSeconds(ManagerTime);
+
         M1.LevOneDone = true;
     }
     public void OneLevel2()
     {
         Manager.Level1 = Manager.Levels[0];
+       
         Btn.onClick.Invoke();
         StartCoroutine(CheckLevel2());
     }
@@ -55,6 +51,7 @@ public class ProcessManagerment : MonoBehaviour
     public void OneLevel3()
     {
         Manager.Level1 = Manager.Levels[0];
+       
         Btn.onClick.Invoke();
         StartCoroutine(CheckLevelOneThree());
     }
@@ -122,6 +119,7 @@ public class ProcessManagerment : MonoBehaviour
     {
         Manager.Level1 = Manager.Levels[2];
         Btn.onClick.Invoke();
+        StartCoroutine(Lev3Three());
     }
     IEnumerator Lev3Three()
     {

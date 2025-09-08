@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
     [Header("Boolean manager")]
     internal bool Deaths = true;
 
-
+    bool invincible = false;
     void Start()
     {
         
@@ -50,6 +50,14 @@ public class PlayerManager : MonoBehaviour
         {
             Death.SetActive(false);
         }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            invincible = true;
+        }
+        if( Input.GetKeyUp(KeyCode.Space))
+        {
+            invincible = false;
+        }
     }
     void HitBolts()
     {
@@ -69,7 +77,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (Bool.GameStart == true)
         {
-            if (other.CompareTag("Enemy"))
+            if (other.CompareTag("Enemy") && invincible == false)
             {
                 AudioHeat.Play();
                 Manager.Health -= 0.5f;

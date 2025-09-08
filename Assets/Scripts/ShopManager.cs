@@ -13,38 +13,58 @@ public class ShopManager : MonoBehaviour
     public Button btn3;
     public Button btn4;
     public Button btn5;
+
     public void Geems()
     {
-        Mecanique.GemsInt = Mecanique.GemsInt * 3;
+        Mecanique.GemsInt = Mecanique.GemsInt +10;
         btn0.interactable = false;
     }
     public void WeaponDesign()
     {
-        btn1.interactable = false;
-        if(Mecanique.CoinsInt > 400)
+      
+        if (ShopContent.isPurchased == true)
+        {
+            btn1.interactable = false;
+            ShopContent.isPurchased = false;
+        }
+       /* if (Mecanique.CoinsInt > 400)
         {
             Mecanique.CoinsInt -= 400;
-        }
+           btn1.interactable = false;
+        }*/
     }
     public void BonePendant()
     {
+       
         btn2.interactable = false;
-        Mecanique.CoinsInt = Mecanique.CoinsInt * 20;
+        Mecanique.CoinsInt = Mecanique.CoinsInt + 30;
     }
     public void BoneM()
     {
-        btn3.interactable = false;
+        if (ShopContent.isPurchased == true)
+        {
+            btn3.interactable = false;
+            ShopContent.isPurchased = false;
+        }
+      
     }
     public void ClothingDesign()
     {
-        btn4.interactable = false;
-        if(Mecanique.CoinsInt > 5000)
+        if (ShopContent.isPurchased == true)
         {
-            Mecanique.CoinsInt -= 5000;
+            btn4.interactable = false;
+            ShopContent.isPurchased = false;
         }
+     
     }
     public void ShoesDesign()
     {
         btn5.interactable = false;
     }
+}
+public enum ShopItemType
+{
+    coins,
+    gems,
+    flash
 }

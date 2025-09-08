@@ -59,8 +59,11 @@ public class SpawenManager : MonoBehaviour
         {
             if(MakeIt == true)
             {
-                (Instantiate(Zombie, new Vector3(Spawen1.transform.position.x, Spawen1.transform.position.y + Random.Range(-5, 5), Spawen1.transform.position.z), Spawen1.transform.rotation) as GameObject).transform.SetParent(SpawenLocalisation.transform);
-                (Instantiate(Zombie, new Vector3(Spawen2.transform.position.x + Random.Range(-5, 5), Spawen2.transform.position.y, Spawen2.transform.position.z), Spawen2.transform.rotation) as GameObject).transform.SetParent(SpawenLocalisation.transform);
+                (Instantiate(Zombie, new Vector3(Spawen1.transform.position.x, Spawen1.transform.position.y + Random.Range(-5, 5), 
+                    Spawen1.transform.position.z), Spawen1.transform.rotation) as GameObject).transform.SetParent(SpawenLocalisation.transform);
+                (Instantiate(Zombie, new Vector3(Spawen2.transform.position.x + Random.Range(-5, 5), 
+                    Spawen2.transform.position.y, Spawen2.transform.position.z), Spawen2.transform.rotation) as GameObject).
+                    transform.SetParent(SpawenLocalisation.transform);
                 yield return new WaitForSeconds(0.9f);
             }
             StartCoroutine(SpaweningManager());

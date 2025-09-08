@@ -55,6 +55,7 @@ public class CoinsManager : MonoBehaviour
             StartCoroutine(FollowPlayer());
             UIManager.GetComponent<ManagerMecanique>().CoinsInt += 1;
             Manager.GetComponent<GameManager>().CurrentCurrency += 1;
+            UIManager.GetComponent<UIManager>().currentCoins += 1;
             PlayerPrefs.SetInt("coins" , UIManager.GetComponent<ManagerMecanique>().CoinsInt);
             StartCoroutine(FlashingLed());
         }
